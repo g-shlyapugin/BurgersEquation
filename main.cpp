@@ -1,4 +1,4 @@
-#include <iomanip>
+п»ї#include <iomanip>
 #include <complex>
 #include <cmath>
 #include "Burgers.h"
@@ -13,33 +13,31 @@ int main()
 	double T = 0.8;
 	double eps = 0.1;
 
-	//Создаем сетку
+	//РЎРѕР·РґР°РµРј СЃРµС‚РєСѓ
 	Grid grd(N, M, x_l, x_r, T);
 	double *x = grd.get_x_grid();
 	double *t = grd.get_t_grid();
 
-	//Создаем вектора граничных условий 
+	//РЎРѕР·РґР°РµРј РІРµРєС‚РѕСЂР° РіСЂР°РЅРёС‡РЅС‹С… СѓСЃР»РѕРІРёР№ 
 	double* u_l = new double[M + 1];
 	double* u_r = new double[M + 1];
 	for (int j = 0; j < (M + 1); j++) {
 		*(u_l + j) = -5.0*cos(t[j]) + 8.0*sin(t[j]);
 		*(u_r + j) = 2.0*cos(t[j]);
 	}
-	//Задаем начальную функцию u_0 
+	//Р—Р°РґР°РµРј РЅР°С‡Р°Р»СЊРЅСѓСЋ С„СѓРЅРєС†РёСЋ u_0 
 	double* u0 = new double[N + 1];
 	for (int i = 0; i < (N + 1); i++)
 		*(u0 + i) = ((x[i] + 1.0) + (x[i] - 5.0)*exp(-3.0*(x[i] - 0.50) / eps)) / (1.0 + exp(-3.0*(x[i] - 0.50) / eps));
 
 
-	//Конструируем объект класса Burgers
+	//РљРѕРЅСЃС‚СЂСѓРёСЂСѓРµРј РѕР±СЉРµРєС‚ РєР»Р°СЃСЃР° Burgers
 	Burgers BurgersSol(N, M, x_l, x_r, T, a_11, u_l, u_r, u0, eps);
 	delete[] u_l, u_r, u0;
 
-	//Burgers BurgersSol(N, M, x_l, x_r, T, a_11, -5.0, 2.0, u0, eps); //Постоянные граничные условия
-
 	double** u = BurgersSol.get_solution();
 
-	//Записываем в файл
+	//Р—Р°РїРёСЃС‹РІР°РµРј РІ С„Р°Р№Р»
 	std::ofstream myofs;
 	myofs.open("Results.txt");
 	myofs << BurgersSol;

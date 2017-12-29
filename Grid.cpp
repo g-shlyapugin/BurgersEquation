@@ -1,12 +1,12 @@
-#include "Grid.h"
+п»ї#include "Grid.h"
 
 Grid::Grid(int n, int m, double x_l, double x_r, double t) :
 	N(n), M(m), x_left(x_l), x_right(x_r), T(t) {
-	// Шаг сетки по координате и времени
+	//РЁР°РіРё СЃРµС‚РєРё РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Рµ Рё РІСЂРµРјРµРЅРё
 	double h = (x_right - x_left) / N;
 	double tau = T / M;
 
-	//Формируем сетки по координате и времени												
+	//Р¤РѕСЂРјРёСЂСѓРµРј СЃРµС‚РєРё РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Рµ Рё РІСЂРµРјРµРЅРё												
 	x_grid = new double[N + 1];
 	for (int i = 0; i < (N + 1); i++)
 		x_grid[i] = x_left + h * i;

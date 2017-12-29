@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class Grid {
 public:
 	Grid(int, int, double, double, double);
