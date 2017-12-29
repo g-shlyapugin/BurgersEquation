@@ -1,40 +1,40 @@
-#pragma once
+п»ї#pragma once
 #include "Grid.h"
-#include <fstream> 
+#include <fstream>
 class Burgers : public Grid {
 private:
-	std::complex<double> a_11;		//Параметр схемы CROS1а
-	double* u_left;					//Левое граничное условие
-	double* u_right;				//Правое граничное условие
-	double* u_0;					//Начальная функция
-	double eps;						//Малый (сингулярный) параметр 
-	double** u_sol;
+	std::complex<double> a_11;		//РџР°СЂР°РјРµС‚СЂ СЃС…РµРјС‹ CROS1Р°
+	double* u_left;					//Р›РµРІРѕРµ РіСЂР°РЅРёС‡РЅРѕРµ СѓСЃР»РѕРІРёРµ
+	double* u_right;				//РџСЂР°РІРѕРµ РіСЂР°РЅРёС‡РЅРѕРµ СѓСЃР»РѕРІРёРµ
+	double* u_0;					//РќР°С‡Р°Р»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ
+	double eps;						//РњР°Р»С‹Р№ (СЃРёРЅРіСѓР»СЏСЂРЅС‹Р№) РїР°СЂР°РјРµС‚СЂ
+	double** u_sol;                 //Р РµС€РµРЅРёРµ
 public:
 	Burgers(int n, int m, double x_l, double x_r,
 		double T1, std::complex<double> a, double* ul,
 		double*, double* u_00, double ep);
 
-	//В случае, если граничные условия не зависят от времени
+	//Р’ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё РіСЂР°РЅРёС‡РЅС‹Рµ СѓСЃР»РѕРІРёСЏ РЅРµ Р·Р°РІРёСЃСЏС‚ РѕС‚ РІСЂРµРјРµРЅРё
 	Burgers(int n, int m, double x_l, double x_r,
 		double T1, std::complex<double> a,
 		double ul, double ur, double* u_00, double ep);
 
 	double** get_solution();
 
-	//Деструктор
+	//Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
 	~Burgers();
 
 };
 
 std::ofstream& operator<<(std::ofstream& ofs, const Burgers& burg_obj);
 
-//Функция, реализующая метод прогонки
+//Р¤СѓРЅРєС†РёСЏ, СЂРµР°Р»РёР·СѓСЋС‰Р°СЏ РјРµС‚РѕРґ РїСЂРѕРіРѕРЅРєРё
 std::complex <double>* TridiagonalMatrixAlgorithm(int N, std::complex<double>* a,
 	std::complex<double>* b, std::complex<double>* c, double* d);
 
-//Функ, вычисляющая правие части системы ОДУ
+//Р¤СѓРЅРє, РІС‹С‡РёСЃР»СЏСЋС‰Р°СЏ РїСЂР°РІРёРµ С‡Р°СЃС‚Рё СЃРёСЃС‚РµРјС‹ РћР”РЈ
 double* fCalculation(int N, double* u, double h, double eps, double u_left, double u_right);
 
-//Вычисление диагоналей 3-х диаг. матр. на каждом шаге
+//Р’С‹С‡РёСЃР»РµРЅРёРµ РґРёР°РіРѕРЅР°Р»РµР№ 3-С… РґРёР°Рі. РјР°С‚СЂ. РЅР° РєР°Р¶РґРѕРј С€Р°РіРµ
 void DiagonalsPreparation(std::complex <double>* a, std::complex<double>* b, std::complex<double>* c,
 	int N, double* u, double tau, double h, double eps, double u_left, double u_right, std::complex<double> a_11);
